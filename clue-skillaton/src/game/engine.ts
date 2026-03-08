@@ -95,10 +95,11 @@ export function makeSuggestion(
   let disproverId: string | null = null;
   let disprovenCard: (Character | Weapon | Room) | null = null;
 
-  for (let i = 1; i <= state.players.length; i++) {
+  // In Clue, only OTHER players (clockwise from suggester) can disprove; suggester never shows own card
+  for (let i = 1; i < state.players.length; i++) {
     const checkIndex = (playerIndex + i) % state.players.length;
     const other = state.players[checkIndex];
-    if (other.isEliminated) continue;
+    if (other.id === playerId || other.isEliminated) continue;
 
     const matching = other.hand.filter(
       (c) =>
