@@ -110,6 +110,88 @@ button {
   color: var(--text-primary);
 }
 
+.rules-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--accent-gold);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.rules-link:hover {
+  text-decoration: underline;
+}
+
+/* Rules page */
+.rules-page {
+  max-width: 720px;
+  padding: 2rem 1.5rem;
+}
+
+.rules-page h1 {
+  color: var(--accent-gold);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.rules-content {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.rules-content section {
+  margin-bottom: 2rem;
+}
+
+.rules-content section:last-child {
+  margin-bottom: 0;
+}
+
+.rules-content h2 {
+  color: var(--accent-gold);
+  font-size: 1.2rem;
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.rules-content h3 {
+  color: var(--text-primary);
+  font-size: 1rem;
+  margin: 1rem 0 0.5rem;
+}
+
+.rules-content p,
+.rules-content li {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0 0 0.5rem;
+}
+
+.rules-content ul {
+  margin: 0.5rem 0 1rem 1.25rem;
+  padding: 0;
+}
+
+.rules-page #btn-back {
+  display: block;
+  margin: 0 auto;
+  padding: 0.6rem 1.5rem;
+  background: var(--accent-gold);
+  color: var(--bg-dark);
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.rules-page #btn-back:hover {
+  background: var(--accent-gold-dim);
+  color: var(--text-primary);
+}
+
 /* Setup form */
 .setup-form {
   background: var(--bg-card);

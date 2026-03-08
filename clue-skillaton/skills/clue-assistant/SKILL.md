@@ -1,6 +1,6 @@
 ---
 name: clue-assistant
-description: Assist a human playing Clue—suggest moves, help with deduction, explain note-taking. Use when a human is playing Clue and wants help: "help me with Clue", "Clue strategy", "what should I suggest", "help me track cards", "Clue assistant". Does NOT play for the human; advises only.
+description: "Assist a human playing Clue. Suggest moves, help with deduction, explain note-taking. Use when a human wants help. Does NOT play for the human; advises only."
 ---
 
 # Clue Assistant

@@ -14,9 +14,9 @@ This document describes the entire architecture, workflow, logical flow, and how
 │  ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────────────────┐  │
 │  │   Web UI        │    │   Game Engine    │    │   Sundial Skills            │  │
 │  │   (App.ts)      │◄──►│   (engine.ts)    │    │   (SKILL.md files)          │  │
-│  │   - Lobby       │    │   - types.ts     │    │   - clue-moderator          │  │
-│  │   - Setup       │    │   - deduction.ts │    │   - clue-player    ◄────┐   │  │
-│  │   - Game Board  │    │   - engine       │    │   - clue-assistant  ◄───┤   │  │
+│  │   - Lobby       │    │   - types.ts     │    │   clue-game, clue-moderator,  │  │
+│  │   - Setup       │    │   - deduction.ts │    │   clue-player, clue-assistant │  │
+│  │   - Game Board  │    │   - engine       │    │   (SKILL.md)                  │  │
 │  └────────┬────────┘    └────────┬─────────┘    └─────────────────────────┼───┘  │
 │           │                      │                                         │      │
 │           │              ┌───────┴───────┐                                 │      │
@@ -39,6 +39,7 @@ This document describes the entire architecture, workflow, logical flow, and how
 
 | Skill | Used By | How |
 |-------|---------|-----|
+| **clue-game** | External agents | Orchestrates full game: run web app or conversational session using moderator, player, assistant |
 | **clue-assistant** | AI Assistant (Run button) | `assistant-api.ts` loads `CLUE_ASSISTANT_SKILL` from `skill-loader`, sends as **system prompt** to OpenAI |
 | **clue-player** | Agent turns (when API key set) | `agent-llm.ts` loads `CLUE_PLAYER_SKILL`, sends as **system prompt** to OpenAI; agent outputs SUGGESTION or ACCUSATION |
 | **clue-moderator** | External agents only | Not used by web app; engine handles game logic. For Cursor/Claude orchestration. |
@@ -218,7 +219,7 @@ buildDeductionSheet(game, forPlayerId)
 | `assistant-api.ts` | callAssistant (uses clue-assistant skill) |
 | `agent-llm.ts` | agentTurnWithSkill (uses clue-player skill) |
 | `agent-simulator.ts` | simulateAgentTurn (fallback, no skill) |
-| `skills/clue-*/SKILL.md` | Sundial skill definitions |
+| `skills/clue-*/SKILL.md` | Sundial skill definitions (clue-game, clue-moderator, clue-player, clue-assistant) |
 
 ---
 

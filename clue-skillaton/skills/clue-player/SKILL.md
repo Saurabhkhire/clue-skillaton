@@ -1,6 +1,6 @@
 ---
 name: clue-player
-description: Play Clue as an AI agent—deduction, note-taking, suggestions, and accusations. Use when acting as a Clue player agent: maintaining a deduction sheet, deciding suggestions, interpreting others' reveals, and making accusations. Triggers for "play Clue", "Clue player agent", "Clue deduction", "agent as Clue player".
+description: "Play Clue as an AI agent. Deduction, note-taking, suggestions, accusations. Use when acting as a Clue player agent, maintaining a deduction sheet, deciding suggestions, interpreting others' reveals. Triggers: play Clue, Clue player agent, Clue deduction, agent as Clue player."
 ---
 
 # Clue Player Agent

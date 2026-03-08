@@ -12,7 +12,7 @@ import { getApiKey } from './llm-api';
 import type { GameState, Suggestion, Room } from '../game/types';
 import { ROOMS, CHARACTERS, WEAPONS } from '../game/types';
 
-type AppMode = 'lobby' | 'setup' | 'playing' | 'won';
+type AppMode = 'lobby' | 'setup' | 'playing' | 'won' | 'rules';
 type GameMode = 'human-vs-agents' | 'all-agents';
 
 interface AppState {
@@ -60,6 +60,12 @@ function render() {
   if (state.mode === 'playing' || state.mode === 'won') {
     root.innerHTML = renderGame();
     bindGameEvents();
+    return;
+  }
+
+  if (state.mode === 'rules') {
+    root.innerHTML = renderRules();
+    bindRulesEvents();
   }
 }
 
@@ -81,8 +87,60 @@ function renderLobby(): string {
         </div>
       </div>
       <p style="color: var(--text-secondary); font-size: 0.9rem;">
-        Skills: clue-moderator · clue-player · clue-assistant · Sundial
+        Skills: clue-game · clue-moderator · clue-player · clue-assistant · Sundial
       </p>
+      <a href="#" id="btn-rules" class="rules-link">How to Play</a>
+    </div>
+  `;
+}
+
+function renderRules(): string {
+  return `
+    <div class="app rules-page">
+      <h1>Clue — How to Play</h1>
+      <div class="rules-content">
+        <section>
+          <h2>Objective</h2>
+          <p>Discover who committed the murder, with which weapon, and in which room. One character, one weapon, and one room are hidden in the envelope. The first player to correctly accuse wins.</p>
+        </section>
+        <section>
+          <h2>Setup</h2>
+          <p>Three cards (one character, one weapon, one room) are placed in the secret envelope. The remaining cards are dealt to the players. Each player keeps their hand private.</p>
+        </section>
+        <section>
+          <h2>Characters, Weapons & Rooms</h2>
+          <p><strong>Characters:</strong> Miss Scarlet, Colonel Mustard, Mrs. White, Mr. Green, Mrs. Peacock, Professor Plum</p>
+          <p><strong>Weapons:</strong> Dagger, Candlestick, Revolver, Rope, Lead Pipe, Wrench</p>
+          <p><strong>Rooms:</strong> Hall, Lounge, Dining Room, Kitchen, Ballroom, Conservatory, Billiard Room, Library, Study</p>
+        </section>
+        <section>
+          <h2>Your Turn</h2>
+          <p>On your turn you may either <strong>Suggest</strong> or <strong>Accuse</strong>.</p>
+          <h3>Suggest</h3>
+          <p>Name one character, one weapon, and one room. Starting with the player to your left (clockwise), each player in turn checks their hand. The first player who has <em>any</em> of those three cards must show you <strong>one</strong> of them in secret. The suggester <strong>never</strong> shows their own cards — only other players can disprove. If no one can disprove, play continues to the next turn.</p>
+          <h3>Accuse</h3>
+          <p>Name one character, one weapon, and one room as your final guess. Check the envelope: if you're correct, you win. If you're wrong, you're eliminated and no longer take turns. The game continues until someone wins or everyone else has been eliminated.</p>
+        </section>
+        <section>
+          <h2>Deduction Sheet</h2>
+          <p>Use the deduction sheet to track what you learn:</p>
+          <ul>
+            <li><strong>✓ (tick)</strong> — You have this card, or you're certain a player has it (they showed you).</li>
+            <li><strong>✗ (cross)</strong> — You don't have it, or you know a player doesn't have it (they passed on a suggestion containing it).</li>
+            <li><strong>1, 2, 3</strong> — A player disproved a suggestion containing this card, but you didn't see which of the three they showed (possible matches).</li>
+            <li>When all players have ✗ for a card, that card is in the envelope.</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Tips</h2>
+          <ul>
+            <li>Suggest cards you don't have to rule them out.</li>
+            <li>Watch who passes — if they couldn't disprove, they don't have any of those three cards.</li>
+            <li>Accuse only when you're confident; a wrong accusation eliminates you.</li>
+          </ul>
+        </section>
+      </div>
+      <button id="btn-back" class="primary">Back to Lobby</button>
     </div>
   `;
 }
@@ -354,6 +412,18 @@ function bindLobbyEvents() {
       state.agentCount = state.gameMode === 'human-vs-agents' ? 3 : 4;
       render();
     });
+  });
+  document.getElementById('btn-rules')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    state.mode = 'rules';
+    render();
+  });
+}
+
+function bindRulesEvents() {
+  document.getElementById('btn-back')?.addEventListener('click', () => {
+    state.mode = 'lobby';
+    render();
   });
 }
 

@@ -10,7 +10,8 @@ A Clue board game implementation with **Sundial agent skills** for the Skillatho
   1. **You vs Agents** — Human player with AI opponents; optional AI assistant for strategy
   2. **All Agents** — AI agents play against each other with simulated turns
 
-- **Three Sundial skills**:
+- **Four Sundial skills**:
+  - **clue-game** — Run the full game; coordinates moderator, player, and assistant
   - **clue-moderator** — Orchestrates the game, manages turns, validates suggestions/accusations
   - **clue-player** — Agent as player: deduction, note-taking, suggestions
   - **clue-assistant** — Helps human players with strategy (advises only)
@@ -47,6 +48,7 @@ Skills are installed locally in `.cursor/skills/` for Cursor. For other agents o
 ### Install from Sundial (after publishing)
 
 ```bash
+npx sundial-hub add clue-game --agent cursor
 npx sundial-hub add clue-moderator --agent cursor
 npx sundial-hub add clue-player --agent cursor
 npx sundial-hub add clue-assistant --agent cursor
@@ -54,15 +56,30 @@ npx sundial-hub add clue-assistant --agent cursor
 
 ### Publish to Sundial
 
-```bash
-npx sundial-hub auth login
-npx sundial-hub push skills/clue-moderator --version 1.0.0 --changelog "Initial release" --visibility public
-npx sundial-hub push skills/clue-player --version 1.0.0 --changelog "Initial release" --visibility public
-npx sundial-hub push skills/clue-assistant --version 1.0.0 --changelog "Initial release" --visibility public
-```
+1. **Log in** (one-time; opens browser):
+
+   ```bash
+   npx sundial-hub auth login
+   ```
+
+2. **Publish all skills**:
+
+   ```bash
+   npm run publish:sundial
+   ```
+
+   Or push individually:
+
+   ```bash
+   npx sundial-hub push skills/clue-game --skill-version 1.0.0 --changelog "Initial release" --visibility public
+   npx sundial-hub push skills/clue-moderator --skill-version 1.0.0 --changelog "Initial release" --visibility public
+   npx sundial-hub push skills/clue-player --skill-version 1.0.0 --changelog "Initial release" --visibility public
+   npx sundial-hub push skills/clue-assistant --skill-version 1.0.0 --changelog "Initial release" --visibility public
+   ```
 
 ## Using the Skills
 
+- **Run full game**: "Run a Clue game" — uses clue-game (coordinates all)
 - **Moderate a game**: "Run a Clue game with 4 agent players" — uses clue-moderator
 - **Play as agent**: "I'm playing Clue as Scarlet, suggest a move" — uses clue-player
 - **Get help**: "Help me with Clue strategy" — uses clue-assistant
@@ -74,6 +91,7 @@ npx sundial-hub push skills/clue-assistant --version 1.0.0 --changelog "Initial 
 │   ├── game/           # Core engine (types, engine, agent-simulator)
 │   └── app/            # UI (App.ts)
 ├── skills/             # Skill source (for Sundial publish)
+│   ├── clue-game/
 │   ├── clue-moderator/
 │   ├── clue-player/
 │   └── clue-assistant/
